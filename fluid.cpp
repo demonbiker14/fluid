@@ -1,8 +1,9 @@
 #include <array>
 #include <cassert>
 #include <iostream>
+#include <limits>
 #include <random>
-#include <utility>
+
 using namespace std;
 
 constexpr size_t N = 36, M = 84;
@@ -88,7 +89,7 @@ struct Fixed {
   bool operator==(const Fixed &) const = default;
 };
 
-static constexpr Fixed inf = Fixed::from_raw(std::numeric_limits<int32_t>::max());
+static constexpr Fixed inf = Fixed::from_raw(numeric_limits<int32_t>::max());
 static constexpr Fixed eps = Fixed::from_raw(deltas.size());
 
 Fixed operator+(Fixed a, Fixed b) {
@@ -138,7 +139,7 @@ ostream &operator<<(ostream &out, Fixed x) {
   return out << x.v / (double) (1 << 16);
 }
 
-Fixed rho[256];
+Fixed  rho[256];
 
 Fixed p[N][M]{}, old_p[N][M];
 
@@ -311,8 +312,9 @@ int dirs[N][M]{};
 
 int main() {
   rho[' '] = 0.01;
-  rho['.'] = 1000;
-  Fixed g = 0.1;
+  rho['.'] = 10000;
+
+  Fixed g = 0.3;
 
   for (size_t x = 0; x < N; ++x) {
     for (size_t y = 0; y < M; ++y) {
